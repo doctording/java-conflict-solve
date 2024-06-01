@@ -1,0 +1,30 @@
+target/
+${env.MVN_LOCAL_REPO}
+!.mvn/wrapper/maven-wrapper.jar
+/git-m
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+temp.text
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+
+.DS_Store
+.flattened-pom.xml
+.sdkmanrc
