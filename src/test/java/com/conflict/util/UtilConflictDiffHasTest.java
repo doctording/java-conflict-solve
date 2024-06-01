@@ -1,36 +1,26 @@
-## 一个通用的配置冲突解决方案
+package com.conflict.util;
 
-### 了解问题和场景(和git类似)
+import com.conflict.obj.AbstractConflictSubject;
+import com.conflict.obj.ConflictDiff;
+import com.conflict.ConflictSubject;
+import com.conflict.obj.ConflictHasAndRecord;
+import com.conflict.obj.ConflictRecord;
+import com.conflict.utils.ConflictUtils;
+import org.junit.jupiter.api.Test;
 
-实际场景：一个项目的配置,即`List<key,value>`, 然后会有多人修改发布，每个人有自己的变更配置，可以记为`Map<ChangId, List<key，value>>`
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-需要考虑的就是如何处理这些变更配置和原有的主干配置的冲突问题
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
----
-
-作为一个多变更配置发布和冲突解决产品，考虑如下的处理
-
-1. 多人发布--->检测无冲突--->直接合并配置并告知--->发布
-2. 多人发布--->检测有冲突--->通知处理--->依据冲突处理进行合并配置并告知--->发布
-
-所以需要有冲突显示和解决的产品、需要有显示最终配置的产品、需要有配置diff的产品
-
-### 冲突场景
-
-考虑实际的场景就如下:
-
-1. 新增key，只有一个变更
-2. 新增key，多个变更新增相同的这个key ------冲突
-3. 修改key，只有一个变更修改
-4. 修改key，多个变更修改相同的这个key ------- 冲突
-5. 删除key，一个变更删除
-6. 删除key，多个变更删除
-7. 同一个key，存在1个变更修改（可能多个变更），另一个变更删除（可能多个变更） ------- 冲突
-
-
-### 代码处理例子
-
-```java
+/**
+ * @author dingqi on 2024/6/1
+ * @since 1.0.0
+ */
 public class UtilConflictDiffHasTest {
     @Test
     public void test() {
@@ -126,4 +116,3 @@ public class UtilConflictDiffHasTest {
         assertFalse(conflictHasAndRecord.getHasConflict());
     }
 }
-```
