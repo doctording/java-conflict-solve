@@ -292,3 +292,63 @@ public class UtilConflictDiffHasTest {
 对于冲突解决
 1. 显然两种不同的方式决定了最后`k2`属性的去留（见代码单侧）
 
+
+### 用户使用
+
+假定你项目中已经有一个对象了，如下
+```java
+public class YourProperty {
+    Integer key;
+    String value;
+    String otherProperty;
+}
+```
+
+那么你需要继承下AbstractConflictSubject，适配如下
+
+````java
+public class YourPropertyModify extends AbstractConflictSubject<Integer, String> {
+//    Integer key;
+//    String value;
+    String otherProperty;
+
+    public YourPropertyModify(Integer key, String value) {
+        super(key, value);
+    }
+
+    @Override
+    public boolean valueEquals(String otherValue) {
+        return Objects.equals(this.getValue(), otherValue);
+    }
+
+    @Override
+    public int compareValues(String otherValue) {
+        return Objects.compare(this.getValue(), otherValue, String::compareToIgnoreCase);
+    }
+}
+````
+
+接着就是正常使用了：
+
+测试代码见`com.your.project.MainTest`, 测试结果
+
+```shell script
+基线<key,value>:
+<1:1>
+<2:2>
+用户1<key,value>修改后如下
+<1:1>
+<2:2>
+<3:3>
+用户2<key,value>修改后如下:
+<1:1>
+<2:22>
+---------------------------
+冲突情况:无
+合并后的<key,value>情况:
+<1:1>
+<2:22>
+<3:3>
+```
+
+可以看到，用户1和用户2的修改最红合并到一起，组成了最后两个用户想要的结果
