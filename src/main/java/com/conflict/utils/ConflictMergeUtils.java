@@ -22,7 +22,9 @@ public class ConflictMergeUtils {
             final List<AbstractConflictSubject<K, V>> baseProperty,
             final Map<I, List<AbstractConflictSubject<K, V>>> changePropertyMap) {
         List<AbstractConflictSubject<K, V>> finalProperty = new ArrayList();
-        finalProperty.addAll(baseProperty);
+        if (baseProperty != null) {
+            finalProperty.addAll(baseProperty);
+        }
         // changeId key AppPropertyDesc map结构
         Map<I, Map<K, AbstractConflictSubject<K, V>>> changeKeyPropertyMap = new HashMap<>(16);
         for (I changeId : changePropertyMap.keySet()) {
@@ -70,7 +72,9 @@ public class ConflictMergeUtils {
             final List<AbstractConflictSubject<K, V>> baseProperty,
             final Map<I, List<AbstractConflictSubject<K, V>>> changePropertyMap) {
         List<AbstractConflictSubject<K, V>> finalProperty = new ArrayList();
-        finalProperty.addAll(baseProperty);
+        if (baseProperty != null) {
+            finalProperty.addAll(baseProperty);
+        }
         // changeId key AppPropertyDesc map结构
         Map<I, Map<K, AbstractConflictSubject<K, V>>> changeKeyPropertyMap = new HashMap<>(16);
         for (I changeId : changePropertyMap.keySet()) {
